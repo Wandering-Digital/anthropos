@@ -1,0 +1,34 @@
+app:
+  env: staging #development, staging, production
+  host: "0.0.0.0"
+  port: 8080
+  read_timeout: 30 #seconds
+  write_timeout: 30 #seconds
+  idle_timeout: 30 #seconds
+  http_timeout: 15 #seconds
+
+database:
+  host: localhost
+  port: 5432
+  name: anthropos
+  username: admin
+  password: secret
+  options:
+    sslmode:
+      - disable
+  max_idle_connection: 2
+  max_open_connection: 2
+  max_connection_lifetime: 300
+  batch_size: 3000
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  db: 0
+  password: ""
+  default_ttl: 7200 #seconds
+
+cache:
+  prefix: "anthropos"
+  ttl:
+    default: 7200 # secondsS

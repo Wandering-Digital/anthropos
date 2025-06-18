@@ -7,9 +7,9 @@ const (
 	UserTypeAgent  AccountType = "agent"
 )
 
-func (ut AccountType) IsValid() bool {
+func (at AccountType) IsValid() bool {
 	for _, userType := range []AccountType{UserTypeClient, UserTypeAgent} {
-		if userType == ut {
+		if userType == at {
 			return true
 		}
 	}

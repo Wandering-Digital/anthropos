@@ -2,14 +2,14 @@ package request
 
 import (
 	"fmt"
-	"regexp"
 	"strings"
 
 	"github.com/Wandering-Digital/anthropos/cdt"
 	"github.com/Wandering-Digital/anthropos/internal/customerror"
+	"github.com/Wandering-Digital/anthropos/internal/utils/email"
 )
 
-const emailMaxLength = 254
+const emailMaxLength = 100
 
 type CreateUser struct {
 	Email       string          `json:"email"`
@@ -25,8 +25,8 @@ func (cu *CreateUser) Validate() *customerror.ValidationError {
 	if cu.Email == "" {
 		ve.Add("email", "is required")
 	} else if len(cu.Email) > emailMaxLength {
-		ve.Add("email", fmt.Sprint("must be within %d characters", emailMaxLength))
-	} else if !isValidEmailFormat(cu.Email) {
+		ve.Add("email", fmt.Sprintf("must be within %d characters", emailMaxLength))
+	} else if !email.IsValidFormat(cu.Email) {
 		ve.Add("email", "has an invalid format")
 	}
 
@@ -45,10 +45,4 @@ func (cu *CreateUser) Validate() *customerror.ValidationError {
 	}
 
 	return nil
-}
-
-// TO-DO: Expand email validation
-func isValidEmailFormat(email string) bool {
-	re := `^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$`
-	return regexp.MustCompile(re).MatchString(email)
 }

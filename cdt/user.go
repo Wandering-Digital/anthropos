@@ -1,15 +1,15 @@
 package cdt
 
-type UserType string
+type AccountType string
 
 const (
-	UserTypeClient UserType = "client"
-	UserTypeAgent  UserType = "agent"
+	UserTypeClient AccountType = "client"
+	UserTypeAgent  AccountType = "agent"
 )
 
-func (ut UserType) IsValid() bool {
-	for _, userType := range []UserType{UserTypeClient, UserTypeAgent} {
-		if userType == ut {
+func (at AccountType) IsValid() bool {
+	for _, userType := range []AccountType{UserTypeClient, UserTypeAgent} {
+		if userType == at {
 			return true
 		}
 	}

@@ -20,7 +20,7 @@ func NewUser(userRepo domain.UserRepository) domain.UserUseCase {
 
 func (u *User) Create(ctx context.Context, ctr *criteria.CreateUser) (*model.User, error) {
 	user := model.User{
-		UserName: ctr.UserName,
+		Email: ctr.Email,
 	}
 
 	if err := u.userRepo.Create(ctx, &user); err != nil {

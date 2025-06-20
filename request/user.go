@@ -6,35 +6,38 @@ import (
 
 	"github.com/Wandering-Digital/anthropos/cdt"
 	"github.com/Wandering-Digital/anthropos/internal/customerror"
+	"github.com/Wandering-Digital/anthropos/internal/utils/email"
 )
 
-const userNameMaxLength = 50
+const emailMaxLength = 100
 
 type CreateUser struct {
-	UserName string       `json:"user_name"`
-	Password string       `json:"password"`
-	UserType cdt.UserType `json:"user_type"`
+	Email       string          `json:"email"`
+	Password    string          `json:"password"`
+	AccountType cdt.AccountType `json:"account_type"`
 }
 
 func (cu *CreateUser) Validate() *customerror.ValidationError {
 	ve := customerror.NewValidationError()
 
-	cu.UserName = strings.TrimSpace(cu.UserName)
+	cu.Email = strings.TrimSpace(cu.Email)
 
-	if cu.UserName == "" {
-		ve.Add("user_name", "is required")
-	} else if len(cu.UserName) > userNameMaxLength {
-		ve.Add("user_name", fmt.Sprint("must be withing %d characters", userNameMaxLength))
+	if cu.Email == "" {
+		ve.Add("email", "is required")
+	} else if len(cu.Email) > emailMaxLength {
+		ve.Add("email", fmt.Sprintf("must be within %d characters", emailMaxLength))
+	} else if !email.IsValidFormat(cu.Email) {
+		ve.Add("email", "has an invalid format")
 	}
 
 	if cu.Password == "" {
 		ve.Add("password", "is required")
 	}
 
-	if cu.UserType == "" {
-		ve.Add("user_type", "is required")
-	} else if !cu.UserType.IsValid() {
-		ve.Add("user_type", "is invalid")
+	if cu.AccountType == "" {
+		ve.Add("account_type", "is required")
+	} else if !cu.AccountType.IsValid() {
+		ve.Add("account_type", "is invalid")
 	}
 
 	if !ve.IsNil() {

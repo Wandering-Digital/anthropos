@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/Wandering-Digital/anthropos/internal/conn"
-
 	"github.com/Wandering-Digital/anthropos/internal/migration"
 
 	"github.com/spf13/cobra"

@@ -1,5 +1,6 @@
 package cdt
 
+// AccountType represents a user's account type
 type AccountType string
 
 const (
@@ -7,6 +8,7 @@ const (
 	AccountTypeAgent  AccountType = "agent"
 )
 
+// AccountStatus represents the status of the user's account
 type AccountStatus string
 
 const (
@@ -16,6 +18,7 @@ const (
 	AccountStatusBlocked   AccountStatus = "blocked"
 )
 
+// AgentOrganizationRole represents the role of an agent within their organization
 type AgentOrganizationRole string
 
 const (

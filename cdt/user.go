@@ -4,8 +4,10 @@ package cdt
 type AccountType string
 
 const (
-	AccountTypeClient AccountType = "client"
-	AccountTypeAgent  AccountType = "agent"
+	AccountTypePlatformAdmin AccountType = "platform_admin"
+	AccountTypeAgencyOwner   AccountType = "agency_owner"
+	AccountTypeAgencyStaff   AccountType = "agency_staff"
+	AccountTypeCustomer      AccountType = "customer"
 )
 
 // AccountStatus represents the status of the user's account
@@ -18,17 +20,20 @@ const (
 	AccountStatusBlocked   AccountStatus = "blocked"
 )
 
-// AgentOrganizationRole represents the role of an agent within their organization
-type AgentOrganizationRole string
+type AgencyRole string
 
 const (
-	AgentOrganizationRoleOwner          AgentOrganizationRole = "owner"
-	AgentOrganizationRoleAdmin          AgentOrganizationRole = "admin"
-	AgentOrganizationRoleRepresentative AgentOrganizationRole = "representative"
+	AgencyRoleOwner AgencyRole = "owner"
+	AgencyRoleStaff AgencyRole = "staff"
 )
 
 func (at AccountType) IsValid() bool {
-	for _, userType := range []AccountType{AccountTypeClient, AccountTypeAgent} {
+	for _, userType := range []AccountType{
+		AccountTypePlatformAdmin,
+		AccountTypeAgencyOwner,
+		AccountTypeAgencyStaff,
+		AccountTypeCustomer,
+	} {
 		if userType == at {
 			return true
 		}
@@ -47,9 +52,9 @@ func (as AccountStatus) IsValid() bool {
 	return false
 }
 
-func (aor AgentOrganizationRole) IsValid() bool {
-	for _, agentOrganizationRole := range []AgentOrganizationRole{AgentOrganizationRoleOwner, AgentOrganizationRoleAdmin, AgentOrganizationRoleRepresentative} {
-		if agentOrganizationRole == aor {
+func (ar AgencyRole) IsValid() bool {
+	for _, agencyRole := range []AgencyRole{AgencyRoleOwner, AgencyRoleStaff} {
+		if agencyRole == ar {
 			return true
 		}
 	}

@@ -21,7 +21,7 @@ type (
 		DeletedAt gorm.DeletedAt
 	}
 
-	Traveller struct {
+	Customer struct {
 		ID      uint   `gorm:"primaryKey" json:"-"`
 		UserID  uint   `gorm:"not null;type:int8" json:"user_id"`
 		Name    string `gorm:"not null;type:varchar(150)" json:"name"`
@@ -35,7 +35,7 @@ type (
 		User User `gorm:"foreignKey:user_id" json:"-"`
 	}
 
-	Organization struct {
+	Agency struct {
 		ID          uint   `gorm:"primaryKey" json:"-"`
 		Name        string `gorm:"not null;type:varchar(150)" json:"name"`
 		Email       string `gorm:"not null;type:varchar(100)" json:"email"`
@@ -47,18 +47,18 @@ type (
 		UpdatedAt time.Time `gorm:"not null;type:timestamptz" json:"-"`
 		DeletedAt gorm.DeletedAt
 
-		Agents []Agent `gorm:"foreignKey:organization_id;constraint:OnDelete:CASCADE" json:"agents,omitempty"`
+		Staff []AgencyStaff `gorm:"foreignKey:agency_id;constraint:OnDelete:CASCADE" json:"staff,omitempty"`
 	}
 
-	Agent struct {
-		ID             uint                      `gorm:"primaryKey" json:"-"`
-		UserID         uint                      `gorm:"not null;type:int8" json:"user_id"`
-		OrganizationID uint                      `gorm:"not null;type:int8" json:"organization_id"`
-		Name           string                    `gorm:"not null;type:varchar(150)" json:"name"`
-		Photo          string                    `gorm:"not null; type:varchar(100)" json:"photo"`
-		NID            string                    `gorm:"not null;type:varchar(100)" json:"nid"`
-		Address        string                    `gorm:"not null;type:varchar(250)" json:"address"`
-		Role           cdt.AgentOrganizationRole `gorm:"not null;type:varchar(30)" json:"role"`
+	AgencyStaff struct {
+		ID       uint            `gorm:"primaryKey" json:"-"`
+		UserID   uint            `gorm:"not null;type:int8" json:"user_id"`
+		AgencyID uint            `gorm:"not null;type:int8" json:"agency_id"`
+		Name     string          `gorm:"not null;type:varchar(150)" json:"name"`
+		Photo    string          `gorm:"not null; type:varchar(100)" json:"photo"`
+		NID      string          `gorm:"not null;type:varchar(100)" json:"nid"`
+		Address  string          `gorm:"not null;type:varchar(250)" json:"address"`
+		Role     cdt.AgencyRole  `gorm:"not null;type:varchar(30)" json:"role"`
 
 		CreatedAt time.Time `gorm:"not null;type:timestamptz" json:"-"`
 		UpdatedAt time.Time `gorm:"not null;type:timestamptz" json:"-"`
@@ -71,17 +71,17 @@ type (
 		ID     uint `gorm:"primaryKey" json:"-"`
 		UserID uint `gorm:"not null" json:"link_id"`
 
-		// Agent Info
-		AgentPhoto   string `gorm:"not null; type:varchar(100)" json:"agent_photo"`
-		AgentNID     string `gorm:"not null;type:varchar(100)" json:"agent_nid"`
-		AgentAddress string `gorm:"not null;type:varchar(250)" json:"agent_address"`
+		// Agency Staff Info
+		StaffPhoto   string `gorm:"not null; type:varchar(100)" json:"staff_photo"`
+		StaffNID     string `gorm:"not null;type:varchar(100)" json:"staff_nid"`
+		StaffAddress string `gorm:"not null;type:varchar(250)" json:"staff_address"`
 
-		// Organization Info
-		OrganizationName        string `gorm:"not null;type:varchar(150)" json:"organization_name"`
-		OrganizationEmail       string `gorm:"not null;type:varchar(100)" json:"organization_email"`
-		OrganizationDescription string `gorm:"not null;type:varchar(300)" json:"organization_description"`
-		OrganizationAddress     string `gorm:"not null;type:varchar(250)" json:"organization_address"`
-		OrganizationLogo        string `gorm:"type:varchar(100)" json:"organization_photo"`
+		// Agency Info
+		AgencyName        string `gorm:"not null;type:varchar(150)" json:"agency_name"`
+		AgencyEmail       string `gorm:"not null;type:varchar(100)" json:"agency_email"`
+		AgencyDescription string `gorm:"not null;type:varchar(300)" json:"agency_description"`
+		AgencyAddress     string `gorm:"not null;type:varchar(250)" json:"agency_address"`
+		AgencyLogo        string `gorm:"type:varchar(100)" json:"agency_logo"`
 
 		CreatedAt time.Time `gorm:"not null;type:timestamptz" json:"-"`
 		UpdatedAt time.Time `gorm:"not null;type:timestamptz" json:"-"`
@@ -94,16 +94,16 @@ func (u *User) TableName() string {
 	return "users"
 }
 
-func (t *Traveller) TableName() string {
-	return "travellers"
+func (c *Customer) TableName() string {
+	return "customers"
 }
 
-func (o *Organization) TableName() string {
-	return "organizations"
+func (a *Agency) TableName() string {
+	return "agencies"
 }
 
-func (a *Agent) TableName() string {
-	return "agents"
+func (as *AgencyStaff) TableName() string {
+	return "agency_staff"
 }
 
 func (tsi *TemporarySignupInfo) TableName() string {

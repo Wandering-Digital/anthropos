@@ -27,5 +27,5 @@ func downDatabase(cmd *cobra.Command, args []string) {
 	err := db.GormDB.Migrator().DropTable(migration.Models...)
 	logDBFatal(err)
 
-	log.Println("Database dopped successfully!")
+	log.Println("Database dropped successfully!")
 }

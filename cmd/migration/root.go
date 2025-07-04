@@ -18,7 +18,7 @@ var (
 		Long:  `Migration is a tool to generate and modify databse tables`,
 		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 			if err := conn.ConnectDB(); err != nil {
-				return fmt.Errorf("Cant't connect database: %v", err)
+				return fmt.Errorf("Can't connect database: %v", err)
 			}
 			return nil
 		},

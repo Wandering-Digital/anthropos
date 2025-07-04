@@ -63,7 +63,7 @@ func (r *Redis) Set(ctx context.Context, key string, value string, expiration ..
 	}
 
 	if err := r.client.Set(ctx, key, value, expiry).Err(); err != nil {
-		log.Println("error: %v [set redis cache]", err.Error())
+		log.Printf("error: %v [set redis cache]", err.Error())
 		return err
 	}
 

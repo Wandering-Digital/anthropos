@@ -12,5 +12,5 @@ var (
 func init() {
 	// Register models for migration
 
-	Models = append(Models, &model.User{}, &model.Traveller{}, &model.Organization{}, &model.Agent{}, &model.TemporarySignupInfo{})
+	Models = []interface{}{&model.User{}, &model.Customer{}, &model.Agency{}, &model.Agent{}, &model.TemporarySignupInfo{}}
 }

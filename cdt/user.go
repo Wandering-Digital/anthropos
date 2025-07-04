@@ -5,8 +5,7 @@ type AccountType string
 
 const (
 	AccountTypePlatformAdmin AccountType = "platform_admin"
-	AccountTypeAgencyOwner   AccountType = "agency_owner"
-	AccountTypeAgencyStaff   AccountType = "agency_staff"
+	AccountTypeAgent         AccountType = "agent"
 	AccountTypeCustomer      AccountType = "customer"
 )
 
@@ -30,8 +29,7 @@ const (
 func (at AccountType) IsValid() bool {
 	for _, userType := range []AccountType{
 		AccountTypePlatformAdmin,
-		AccountTypeAgencyOwner,
-		AccountTypeAgencyStaff,
+		AccountTypeAgent,
 		AccountTypeCustomer,
 	} {
 		if userType == at {
